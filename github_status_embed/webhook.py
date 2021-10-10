@@ -11,9 +11,8 @@ log = logging.getLogger(__name__)
 
 EMBED_DESCRIPTION = "GitHub Actions run [{run_id}]({run_url}) {status_verb}."
 PULL_REQUEST_URL = "https://github.com/{repository}/pull/{number}"
-REPOSITORY_URL = "https://github.com/{repository}"
 ISSUE_URL = "https://github.com/{repository}/issues/{number}"
-WEBHOOK_USERNAME = "GitHub Actions"
+WEBHOOK_USERNAME = "UCF Actions"
 WEBHOOK_AVATAR_URL = (
     "https://raw.githubusercontent.com/"
     "Senior-Design-Team-19-Github-Bots/Discord-Github-Action/main/"
@@ -51,7 +50,7 @@ def get_payload_pull_request(
 
     embed = types.Embed(
         title=(
-            f"[{workflow.repository}] Checks {workflow.status.adjective} on PR: "
+            f"New Pull Request: "
             f"#{pull_request.number} {pull_request.title}"
         ),
         description=EMBED_DESCRIPTION.format(
@@ -60,7 +59,7 @@ def get_payload_pull_request(
         url=PULL_REQUEST_URL.format(
             repository=workflow.repository, number=pull_request.number
         ),
-        color=workflow.status.color,
+        color="13353955",
         fields=fields,
     )
 
@@ -101,7 +100,7 @@ def get_payload_issue(
 
     embed = types.Embed(
         title=(
-            f"[{workflow.repository}] Checks {workflow.status.adjective} on issue: "
+            f"New Issue: "
             f"#{issue.number} {issue.title}"
         ),
         description=EMBED_DESCRIPTION.format(
@@ -147,7 +146,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
             run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
         ),
         url=workflow.url,
-        color="65535",
+        color="#7fe5f0",
         fields=embed_fields,
     )
 
