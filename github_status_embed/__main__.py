@@ -8,7 +8,7 @@ import yaml
 
 from github_status_embed.webhook import send_webhook
 from .log import setup_logging
-from .types import Push, Issue, MissingActionFile, PullRequest, Webhook, Workflow
+from .types import Issue, MissingActionFile, PullRequest, Webhook, Workflow
 
 
 log = logging.getLogger(__name__)
@@ -65,23 +65,15 @@ if __name__ == "__main__":
         log.warning("The use of `pull_request_payload` is deprecated and will be removed in v1.0.0")
         pull_request = PullRequest.from_payload(arguments)
         issue = None
-        push = None
-        success = send_webhook(workflow, webhook, pull_request,issue, dry_run, push)
+        success = send_webhook(workflow, webhook, pull_request,issue, dry_run)
     elif arguments.get("issue_number",  True):
         issue = Issue.from_payload(arguments)
         pull_request = None
-        push = None
-        success = send_webhook(workflow, webhook,pull_request, issue, dry_run, push)
-    elif arguments.get("push_number",  True):
-        push = Push.from_payload(arguments)
-        pull_request = None
-        issue = None
-        success = send_webhook(workflow, webhook,pull_request, issue, dry_run, push)
+        success = send_webhook(workflow, webhook,pull_request, issue, dry_run)
     else:
         pull_request = PullRequest.from_arguments(arguments)
         issue=None
-        push = None
-        success = send_webhook(workflow, webhook, pull_request,issue, dry_run, push)
+        success = send_webhook(workflow, webhook, pull_request,issue, dry_run)
 
     if not success:
         log.debug("Exiting with status code 1")
