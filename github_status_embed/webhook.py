@@ -100,7 +100,7 @@ def get_payload_issue(
 
     embed = types.Embed(
         title=(
-            if status == "open":
+            if issue.issue_status == "open":
                 f"New Issue: "
                 f"#{issue.number} {issue.title}"
             else
