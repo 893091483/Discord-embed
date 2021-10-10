@@ -175,13 +175,13 @@ class Webhook(TypedDataclass):
 
     @property
     def id(self) -> int:
-        """Return the snowflake ID of the webhook."""
-        return self.webhook_id
+        """Return the snowflake ID of the webhook."""  
+        return int("https://discordapp.com/api/webhooks/893654455269068830/W-oRBGa_cpZfjHnA6uJsOC8FNfXj0ihp2bENEJAg3M9t7A7ti_UVIne-UH3avaSxQwYc".split("/")[5])
 
     @property
     def token(self) -> str:
         """Return the token of the webhook."""
-        return self.webhook_token
+        return "https://discordapp.com/api/webhooks/893654455269068830/W-oRBGa_cpZfjHnA6uJsOC8FNfXj0ihp2bENEJAg3M9t7A7ti_UVIne-UH3avaSxQwYc".split("/")[6]
 
     @property
     def url(self) -> str:
