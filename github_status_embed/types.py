@@ -227,6 +227,7 @@ class PullRequest(TypedDataclass, optional=True):
         if not payload:
             log.warning("PR payload could not be parsed, attempting regular pr arguments.")
             return cls.from_arguments(arguments)
+        
 
         # Get the target arguments from the payload, yielding similar results
         # when keys are missing as to when their corresponding arguments are
@@ -261,7 +262,7 @@ class PullRequest(TypedDataclass, optional=True):
     def shortened_source(self, length: int, owner: typing.Optional[str] = None) -> str:
         """Returned a shortened representation of the source branch."""
         pr_source = self.pr_source
-
+    
         # This removes the owner prefix in the source field if it matches
         # the current repository. This means that it will only be displayed
         # when the PR is made from a branch on a fork.
@@ -279,7 +280,7 @@ class PullRequest(TypedDataclass, optional=True):
 @dataclasses.dataclass(frozen=True)
 class Issue(TypedDataclass, optional=True):
     """
-    Dataclass to hold the PR-related arguments.
+    Dataclass to hold the Issue-related arguments.
 
     The attributes names are equal to argument names in the GitHub Actions
     specification to allow for helpful error messages. To provide a convenient
@@ -294,8 +295,8 @@ class Issue(TypedDataclass, optional=True):
 
     @classmethod
     def from_payload(cls, arguments: typing.Dict[str, str]) -> typing.Optional[Issue]:
-        """Create a Pull Request instance from Pull Request Payload JSON."""
-        # Safe load the JSON Payload provided as a command line argument.
+        """Create a issue instance and pop out pull_request_payload arguement."""
+        
         raw_payload = arguments.pop('pull_request_payload').replace("\\", "\\\\")
         log.debug(f"Attempting to parse PR Payload JSON: {raw_payload!r}.")
         try:
@@ -305,6 +306,13 @@ class Issue(TypedDataclass, optional=True):
             payload = {}
         else:
             log.debug("Successfully parsed parsed payload")
+         # If the payload contains multiple PRs in a list, use the first one.
+        if isinstance(payload, list):
+            log.debug("The payload contained a list, extracting first Issue.")
+            payload = payload[0] if payload else {}
+
+        if not payload:
+            return cls.from_arguments(arguments)
 
         # Get the target arguments from the payload, yielding similar results
         # when keys are missing as to when their corresponding arguments are
