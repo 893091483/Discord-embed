@@ -142,8 +142,8 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
 
     embed = types.Embed(
         title=(
-            f"New Commit: "
-            f"#{commit.number} {commit.title}"
+            f"New Commit by: "
+            f"#{workflow.actor}"
         ),
             description=EMBED_DESCRIPTION.format(
             run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
