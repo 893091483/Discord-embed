@@ -38,8 +38,8 @@ def get_payload_pull_request(
             inline=True,
         ),
         types.EmbedField(
-            name="Repository PR",
-            value=f"[{workflow_number}]({workflow.url})",
+            name="Repository",
+            value=f"[{workflow.repository}](https://github.com/{workflow.repository})",
             inline=True,
         ),
         types.EmbedField(
@@ -88,8 +88,8 @@ def get_payload_issue(
             inline=True,
         ),
         types.EmbedField(
-            name="Repository Issue",
-            value=f"[{workflow_number}]({workflow.url})",
+            name="Repository",
+            value=f"[{workflow.repository}](https://github.com/{workflow.repository})",
             inline=True,
         ),
         types.EmbedField(
@@ -131,7 +131,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
         ),
         types.EmbedField(
             name="Repository",
-            value=f"[{workflow.repository} #{workflow.number}](https://github.com/{workflow.repository})",
+            value=f"[{workflow.repository}](https://github.com/{workflow.repository})",
             inline=True,
         ),
         types.EmbedField(
@@ -142,12 +142,12 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
     ]
 
     embed = types.Embed(
-        title=f"[{workflow.repository}] Workflow {workflow.status.adjective}",
+        title=f"New Commit",
         description=EMBED_DESCRIPTION.format(
             run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
         ),
         url=workflow.url,
-        color=workflow.status.color,
+        color="yellow",
         fields=embed_fields,
     )
 
