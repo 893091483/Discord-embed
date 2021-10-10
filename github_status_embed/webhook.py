@@ -15,8 +15,8 @@ ISSUE_URL = "https://github.com/{repository}/issues/{number}"
 WEBHOOK_USERNAME = "UCF Actions"
 WEBHOOK_AVATAR_URL = (
     "https://raw.githubusercontent.com/"
-    "Senior-Design-Team-19-Github-Bots/Discord-Github-Action/main/"
-    "github_actions_avatar.png"
+    "893091483/Discord-embed/main/"
+    "ucf-golden-knights-logo.png"
 )
 FIELD_CHARACTER_BUDGET = 60
 
@@ -59,7 +59,7 @@ def get_payload_pull_request(
         url=PULL_REQUEST_URL.format(
             repository=workflow.repository, number=pull_request.number
         ),
-        color="13353955",
+        color="12388591",
         fields=fields,
     )
 
