@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 
 EMBED_DESCRIPTION = "GitHub Actions run [{run_id}]({run_url}) {status_verb}."
 PULL_REQUEST_URL = "https://github.com/{repository}/pull/{number}"
+REPOSITORY_URL = "https://github.com/{repository}"
 ISSUE_URL = "https://github.com/{repository}/issues/{number}"
 WEBHOOK_USERNAME = "GitHub Actions"
 WEBHOOK_AVATAR_URL = (
@@ -130,7 +131,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
         ),
         types.EmbedField(
             name="Repository",
-            value=f"[{workflow.repository} #{workflow.number}]({repository.url})",
+            value=f"[{workflow.repository} #{workflow.number}]({REPOSITORY_URL})",
             inline=True,
         ),
         types.EmbedField(
