@@ -97,25 +97,36 @@ def get_payload_issue(
             inline=True,
         ),
     ]
-
-    embed = types.Embed(
-        title=(
-            if issue.issue_status == "open":
+    if issue.issue_status == "open":
+        embed = types.Embed(
+            title=(
                 f"New Issue: "
                 f"#{issue.number} {issue.title}"
-            else
+            ),
+            description=EMBED_DESCRIPTION.format(
+                run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
+            ),
+            url=ISSUE_URL.format(
+                repository=workflow.repository, number=issue.number
+            ),
+            color=workflow.status.color,
+            fields=fields,
+        )
+    else:
+        embed = types.Embed(
+            title=(
                 f"Closed Issue: "
                 f"#{issue.number} {issue.title}"
-        ),
-        description=EMBED_DESCRIPTION.format(
-            run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
-        ),
-        url=ISSUE_URL.format(
-            repository=workflow.repository, number=issue.number
-        ),
-        color=workflow.status.color,
-        fields=fields,
-    )
+            ),
+            description=EMBED_DESCRIPTION.format(
+                run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
+            ),
+            url=ISSUE_URL.format(
+                repository=workflow.repository, number=issue.number
+            ),
+            color=workflow.status.color,
+            fields=fields,
+        )
 
     webhook_payload = types.WebhookPayload(
         username=WEBHOOK_USERNAME,
