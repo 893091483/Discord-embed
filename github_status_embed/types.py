@@ -348,6 +348,77 @@ class Issue(TypedDataclass, optional=True):
     def status(self) -> str:
         """Return the title of the PR."""
         return self.issue_status
+    
+@dataclasses.dataclass(frozen=True)
+class Commit(TypedDataclass, optional=True):
+    """
+    Dataclass to hold the Commit-related arguments.
+    The attributes names are equal to argument names in the GitHub Actions
+    specification to allow for helpful error messages. To provide a convenient
+    public API, property getters were used with less redundant information in
+    the naming scheme.
+    """
+
+    commit_author_login: str
+    commit_number: int
+    commit_title: str
+    commit_status: str
+
+    @classmethod
+    def from_payload(cls, arguments: typing.Dict[str, str]) -> typing.Optional[Commit]:
+        """Create a commit instance and pop out pull_request_payload arguement."""
+        
+        raw_payload = arguments.pop('pull_request_payload').replace("\\", "\\\\")
+        log.debug(f"Attempting to parse PR Payload JSON: {raw_payload!r}.")
+        try:
+            payload = json.loads(raw_payload)
+        except json.JSONDecodeError:
+            log.debug("Failed to parse JSON, dropping down to empty payload")
+            payload = {}
+        else:
+            log.debug("Successfully parsed parsed payload")
+         # If the payload contains multiple PRs in a list, use the first one.
+        if isinstance(payload, list):
+            log.debug("The payload contained a list, extracting first Commit.")
+            payload = payload[0] if payload else {}
+
+        if not payload:
+            return cls.from_arguments(arguments)
+
+        # Get the target arguments from the payload, yielding similar results
+        # when keys are missing as to when their corresponding arguments are
+        # missing.
+        arguments["commit_author_login"] = payload.get('user', {}).get('login', '')
+        arguments["commit_number"] = payload.get('number', '')
+        arguments["commit_title"] = payload.get('title', '')
+        arguments["commit_status"] = payload.get('state', '')
+
+        return cls.from_arguments(arguments)
+
+    @property
+    def author(self) -> str:
+        """Return the `commit_author_login` field."""
+        return self.commit_author_login
+
+    @property
+    def author_url(self) -> str:
+        """Return a URL for the author's profile."""
+        return f"https://github.com/{self.commit_author_login}"
+
+    @property
+    def number(self) -> int:
+        """Return the `pr_number`."""
+        return self.commit_number
+
+    @property
+    def title(self) -> str:
+        """Return the title of the PR."""
+        return self.commit_title
+
+    @property
+    def status(self) -> str:
+        """Return the title of the PR."""
+        return self.commit_status
 
 class AllowedMentions(typing.TypedDict, total=False):
     """A TypedDict to represent the AllowedMentions in a webhook payload."""
