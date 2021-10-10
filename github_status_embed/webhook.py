@@ -147,7 +147,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
             run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
         ),
         url=workflow.url,
-        color="#7fe5f0",
+        color=#7fe5f0,
         fields=embed_fields,
     )
 
