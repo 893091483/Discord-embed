@@ -9,7 +9,7 @@ from github_status_embed import types
 
 log = logging.getLogger(__name__)
 
-EMBED_DESCRIPTION = "GitHub Actions run [{run_id}]({run_url}) {status_verb}."
+EMBED_DESCRIPTION = "UCF Actions run [{run_id}]({run_url}) {status_verb}."
 PULL_REQUEST_URL = "https://github.com/{repository}/pull/{number}"
 ISSUE_URL = "https://github.com/{repository}/issues/{number}"
 WEBHOOK_USERNAME = "UCF Actions"
