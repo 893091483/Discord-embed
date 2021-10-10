@@ -43,7 +43,7 @@ def get_payload_pull_request(
         ),
         types.EmbedField(
             name="Source Branch",
-            value=f"[{pull_request.shortened_source(characters_left, owner=workflow.repository_owner)}](https://github.com/itsokthen/android-app/tree/itsokthen-patch-1)",
+            value=f"[{pull_request.shortened_source(characters_left, owner=workflow.repository_owner)}](https://github.com/{workflow.repository}/tree/{pull_request.shortened_source(characters_left, owner=workflow.repository_owner)})",
             inline=True,
         ),
     ]
