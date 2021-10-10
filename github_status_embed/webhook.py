@@ -130,7 +130,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
         ),
         types.EmbedField(
             name="Repository",
-            value=f"[{workflow.repository}]("https://github.com/{repository}")",
+            value=f"[{workflow.repository} #{workflow.number}]({repository.url})",
             inline=True,
         ),
         types.EmbedField(
