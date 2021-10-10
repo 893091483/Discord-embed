@@ -368,7 +368,7 @@ class Push(TypedDataclass, optional=True):
     def from_payload(cls, arguments: typing.Dict[str, str]) -> typing.Optional[Push]:
         """Create a push instance and pop out pull_request_payload arguement."""
         
-        raw_payload = arguments.pop('pull_request_payload').replace("\\", "\\\\")
+        raw_payload = arguments.pop('push_request_payload').replace("\\", "\\\\")
         log.debug(f"Attempting to parse PR Payload JSON: {raw_payload!r}.")
         try:
             payload = json.loads(raw_payload)
