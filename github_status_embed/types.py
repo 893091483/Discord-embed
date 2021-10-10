@@ -177,12 +177,12 @@ class Webhook(TypedDataclass):
     @property
     def id(self) -> int:
         """Return the snowflake ID of the webhook."""  
-        return int(webhoook.split("/")[5])
+        return int(self.webhoook.split("/")[5])
 
     @property
     def token(self) -> str:
         """Return the token of the webhook."""
-        return webhoook.split("/")[6]
+        return self.webhoook.split("/")[6]
 
     @property
     def url(self) -> str:
