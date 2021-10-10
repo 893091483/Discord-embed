@@ -51,7 +51,7 @@ def get_payload_pull_request(
     embed = types.Embed(
         title=(
             f"New Pull Request: "
-            f"#{pull_request.number} {pull_request.title} {pull_request.description}"
+            f"#{pull_request.number} {pull_request.title} {pull_request.body}"
         ),
         description=EMBED_DESCRIPTION.format(
             run_id=workflow.id, run_url=workflow.url, status_verb=workflow.status.verb,
