@@ -170,7 +170,6 @@ class Workflow(TypedDataclass):
 class Webhook(TypedDataclass):
     """A simple dataclass to hold information about the target webhook."""
 
-    webhook_id: int
     webhook_token: str
     
 
