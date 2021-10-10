@@ -109,7 +109,7 @@ def get_payload_issue(
             url=ISSUE_URL.format(
                 repository=workflow.repository, number=issue.number
             ),
-            color=workflow.status.color,
+            color="10879022",
             fields=fields,
         )
     else:
