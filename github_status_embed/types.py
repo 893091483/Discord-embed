@@ -203,7 +203,6 @@ class PullRequest(TypedDataclass, optional=True):
     pr_author_login: str
     pr_number: int
     pr_title: str
-    pr_body: str
     pr_source: str
 
     @classmethod
@@ -236,7 +235,6 @@ class PullRequest(TypedDataclass, optional=True):
         arguments["pr_author_login"] = payload.get('user', {}).get('login', '')
         arguments["pr_number"] = payload.get('number', '')
         arguments["pr_title"] = payload.get('title', '')
-        arguments["pr_body"] = payload.get('body', '')
         arguments["pr_source"] = payload.get('head', {}).get('label', '')
 
         return cls.from_arguments(arguments)
@@ -260,11 +258,6 @@ class PullRequest(TypedDataclass, optional=True):
     def title(self) -> str:
         """Return the title of the PR."""
         return self.pr_title
-    
-    @property
-    def body(self) -> str:
-        """Return the body of the PR."""
-        return self.pr_body
 
     def shortened_source(self, length: int, owner: typing.Optional[str] = None) -> str:
         """Returned a shortened representation of the source branch."""
