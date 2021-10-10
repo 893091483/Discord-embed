@@ -175,6 +175,7 @@ def send_webhook(
         webhook: types.Webhook,
         pull_request: typing.Optional[types.PullRequest],
         issue: typing.Optional[types.Issue],
+        push: typing.Optional[types.Push],
         dry_run: bool = False,
 ) -> bool:
     """Send an embed to specified webhook."""
@@ -184,6 +185,9 @@ def send_webhook(
     elif pull_request is not None:
         log.debug("Creating payload for Pull Request Check")
         payload = get_payload_pull_request(workflow, pull_request)
+    elif push is not None:
+        log.debug("Creating payload for Push Check")
+        payload = get_payload_push(workflow, push)
     else:
         log.debug("Creating payload for non-Pull Request event")
         payload = get_payload(workflow)
