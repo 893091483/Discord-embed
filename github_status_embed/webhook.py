@@ -37,7 +37,7 @@ def get_payload_pull_request(
             inline=True,
         ),
         types.EmbedField(
-            name="Repository PR",
+            name="Workflow Run",
             value=f"[{workflow_number}]({workflow.url})",
             inline=True,
         ),
@@ -87,7 +87,7 @@ def get_payload_issue(
             inline=True,
         ),
         types.EmbedField(
-            name="Repository Issue",
+            name="Workflow Run",
             value=f"[{workflow_number}]({workflow.url})",
             inline=True,
         ),
@@ -129,7 +129,7 @@ def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
             inline=True,
         ),
         types.EmbedField(
-            name="Repository Commit",
+            name="Workflow Run",
             value=f"[{workflow.name} #{workflow.number}]({workflow.url})",
             inline=True,
         ),
