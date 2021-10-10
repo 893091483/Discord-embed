@@ -120,8 +120,16 @@ def get_payload_issue(
     )
     return webhook_payload
 
-def get_payload(workflow: types.Workflow) -> types.WebhookPayload:
-    """Create a WebhookPayload with information about a generic Workflow run."""
+def get_payload(
+        workflow: types.Workflow, commit: types.Commit
+) -> types.WebhookPayload:
+    """Create a WebhookPayload with information about a Pull Request."""
+    # Calculate the character budget for the Source Branch field
+    print(type(commit))
+    author = commit.commit_author_login
+    workflow_number = f"{workflow.name} #{workflow.number}"
+    status = commit.commit_status
+
     embed_fields = [
         types.EmbedField(
             name="Actor",
